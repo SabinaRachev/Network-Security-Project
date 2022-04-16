@@ -1,0 +1,2 @@
+﻿
+#include "../includes/ICollector.h"
