@@ -2,24 +2,22 @@
 
 string host("smtp.gmail.com");
 UInt16 port = 587;
-string password = "rddfwfqnnwitqglt";
+string password = "vymatdrvasbcdwpw";
 string sender = "networkSecMiniProject@gmail.com";
 string receiver = "networkSecMiniProject@gmail.com";
 
-bool sendEmail(string subject,string content) {
+bool sendEmail(string subject, string content) {
 
-	
-	SecureSMTPClientSession session(host, port);
+	Poco::Net::SecureSMTPClientSession session(host, port);
 	session.open();
 	Poco::Net::initializeSSL();
 	SharedPtr<InvalidCertificateHandler> ptrHandler = new AcceptCertificateHandler(false);
-	Context::Ptr ptrContext = new Context(Context::CLIENT_USE, "", Context::VERIFY_RELAXED);
+	Context::Ptr ptrContext = new Context(Context::CLIENT_USE, "", Context::VERIFY_NONE, 9, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
 	SSLManager::instance().initializeClient(0, ptrHandler, ptrContext);
-
 	try
 	{
-		// SSL
 		session.login();
+		
 		if (session.startTLS(ptrContext))
 		{
 			session.login(SMTPClientSession::AUTH_LOGIN, sender, password);
@@ -29,17 +27,17 @@ bool sendEmail(string subject,string content) {
 			message.setSubject(subject);
 			message.setContent(content);
 			session.sendMessage(message);
+
 		}
 		session.close();
 		Poco::Net::uninitializeSSL();
-		cout << "Message was sent!\n";
 		return true;
 	}
 	catch (Poco::Exception& e)
 	{
-		cout << e.message() << endl;
 		session.close();
 		Poco::Net::uninitializeSSL();
 		return false;
 	}
+
 }

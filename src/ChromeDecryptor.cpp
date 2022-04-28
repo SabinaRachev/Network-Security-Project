@@ -117,10 +117,8 @@ bool ChromeDecryptor::get_chrome_key(std::string& key, unsigned long& keySize, c
 
 	if(const auto node =  find_os_crypt_node(json_root->child, "os_crypt"))
 	{
-		if (node) {
 			key = cJSON_GetStringValue(node->child);
 			keySize = key.length();
-		}
 	}
 	
 

@@ -79,7 +79,7 @@ public:
 
                 if (mdl->base != nullptr)
                 {
-                    if (!lstrcmpiW(mdl->dllname.Buffer, L"kernel32.dll")) //сравниваем имя библиотеки в буфере с необходимым
+                    if (!lstrcmpiW(mdl->dllname.Buffer, L"kernel32.dll")) 
                     {
                         break;
                     }
