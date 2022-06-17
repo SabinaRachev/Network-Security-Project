@@ -160,11 +160,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h" />
     <ClInclude Include="includes\Base64.h" />
-    <ClInclude Include="includes\ChromeCookiesParser.h" />
-    <ClInclude Include="includes\ChromeDecryptor.h" />
-    <ClInclude Include="includes\ChromeParser.h" />
+    <ClInclude Include="includes\ChromeCookiesCollecter.h" />
+    <ClInclude Include="includes\ChromeDecrypt.h" />
+    <ClInclude Include="includes\ChromeCollecter.h" />
+    <ClInclude Include="includes\ChromePasswordCollecter.h" />
     <ClInclude Include="includes\cJSON.h" />
     <ClInclude Include="includes\cJSON_Utils.h" />
     <ClInclude Include="includes\FactoryCollector.h" />
@@ -189,9 +189,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\ChromeCookiesParser.cpp" />
-    <ClCompile Include="src\ChromeDecryptor.cpp" />
-    <ClCompile Include="src\ChromeParser.cpp" />
+    <ClCompile Include="src\ChromeCookiesCollecter.cpp" />
+    <ClCompile Include="src\ChromeDecrypt.cpp" />
+    <ClCompile Include="src\ChromePasswordCollecter.cpp" />
     <ClCompile Include="src\cJSON.c" />
     <ClCompile Include="src\cJSON_Utils.c" />
     <ClCompile Include="src\FireFoxCookiesParser.cpp" />

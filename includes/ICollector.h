@@ -7,5 +7,5 @@ class ICollector
 public:
 	ICollector() = default;
 	virtual ~ICollector() = default;
-	virtual List<T> collect_data() = 0;	
+	virtual List<T> collectData() = 0;	
 };

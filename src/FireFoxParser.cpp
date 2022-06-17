@@ -15,7 +15,7 @@ FireFoxParser::FireFoxParser()
 
 
 
-List<AccountData> FireFoxParser::collect_data()
+List<AccountData> FireFoxParser::collectData()
 {
 	auto browsers = this->get_mozilla_browsers();
 

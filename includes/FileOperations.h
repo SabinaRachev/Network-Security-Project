@@ -7,7 +7,9 @@ namespace IO
 	{
 		const auto func_GetFileAttributesA = WinApiImport<f_GetFileAttributesA>::get("GetFileAttributesA", "Kernel32.dll");
 		DWORD dwAttr = func_GetFileAttributesA(dir.c_str());
-		if (dwAttr != 0xffffffff && (dwAttr & FILE_ATTRIBUTE_DIRECTORY)) { return true; }
+		if (dwAttr != 0xffffffff && (dwAttr & FILE_ATTRIBUTE_DIRECTORY)){ 
+			return true;
+		}
 		return false;
 	}
 
@@ -54,8 +56,6 @@ namespace IO
 		if (!func_ReadFile(hFile, tempBuff, fileSize, &numToRead, NULL))
 			return false;
 
-
-		//tempBuff[numToRead] = L'\0';
 		out_data = tempBuff;
 		out_data.resize(numToRead);		
 		delete[] tempBuff;

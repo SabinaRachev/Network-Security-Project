@@ -12,7 +12,7 @@ FireFoxCookiesParser::FireFoxCookiesParser()
 
 }
 
-List<CookieData> FireFoxCookiesParser::collect_data()
+List<CookieData> FireFoxCookiesParser::collectData()
 {
 	auto browsers = this->get_mozilla_browsers();
 
@@ -28,7 +28,8 @@ List<CookieData> FireFoxCookiesParser::collect_data()
 			
 		String cookie_db = temp_dir + "\\cookies.sqlite";
 
-		if(!IO::is_file_exists(cookie_db)) continue;
+		if(!IO::is_file_exists(cookie_db))
+			continue;
 		
 		sqlite3* db;
 
@@ -40,7 +41,6 @@ List<CookieData> FireFoxCookiesParser::collect_data()
 		if (sqlite3_prepare_v2(db, "SELECT  host,name, path, value, expiry FROM moz_cookies", -1, &stmt, 0) != SQLITE_OK)
 			return m_data;
 
-		int entries = 0;		
 
 		while (sqlite3_step(stmt) == SQLITE_ROW)
 		{
@@ -64,10 +64,8 @@ List<CookieData> FireFoxCookiesParser::collect_data()
 			user_data.Path = path;
 			user_data.Value = value;
 			user_data.ExpireUTC = expires_utc;	
-			
 
 			m_data.emplace_back(user_data);
-			entries++;
 		}	
 		
 

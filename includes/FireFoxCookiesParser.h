@@ -11,7 +11,7 @@ public:
 	~FireFoxCookiesParser() override = default;
 public:
 
-	List<CookieData> collect_data() override;
+	List<CookieData> collectData() override;
 
 private:	
 	

