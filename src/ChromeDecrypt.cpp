@@ -37,11 +37,13 @@ bool ChromeDecrypt::initDecryptor(const String& path)
 bool ChromeDecrypt::decrypt(const String& encrypted, String& decrypted, int size)
 {
 	auto password = const_cast<char*>(encrypted.c_str());
-	 
-	//check the version
+	  
+	//check the version -ASE GCM decryption for chrome 80 + 
 	if ((encrypted[0] == 'v' &&encrypted[1] == '1' && encrypted[2] == '0') ||
 		(encrypted[0] == 'v' && encrypted[1] == '1' && encrypted[2] == '1'))
 	{
+		//The encrypted data in this case start with the ASCII encoding of v10/v11 
+		//followed by the 12 bytes nonce, the actual ciphertext and finally the 16 bytesa uthentication tag.
 
 		ULONG cbOutput = MAX_SIZE;
 		ULONG cbCiphertext = 0;
@@ -50,24 +52,25 @@ bool ChromeDecrypt::decrypt(const String& encrypted, String& decrypted, int size
 		BCRYPT_AUTHENTICATED_CIPHER_MODE_INFO BACMI;
 		BCRYPT_INIT_AUTH_MODE_INFO(BACMI);
 
-		BACMI.pbNonce = (PUCHAR)(password + 3);
-		BACMI.cbNonce = 12;
+		BACMI.pbNonce = (PUCHAR)(password + 3); //pointer to nonce
+		BACMI.cbNonce = 12; //size to nonce
 
-		BACMI.pbTag = (PUCHAR)(password + size - 16);
-		BACMI.cbTag = 16;
+		BACMI.pbTag = (PUCHAR)(password + size - 16);//pointer to tag
+		BACMI.cbTag = 16; //size of tag 
 
 
-		if (!BCRYPT_SUCCESS(m_BCryptDecrypt(m_keyHandler, (BYTE*)(password + 15), size - 15 - 16, &BACMI, NULL, 0, (PUCHAR)m_tempSaver, cbOutput, &cbCiphertext, 0)))
+		if (!BCRYPT_SUCCESS(m_BCryptDecrypt(m_keyHandler, (BYTE*)(password + 15), size - 31, &BACMI, NULL, 0, (PUCHAR)m_tempSaver, cbOutput, &cbCiphertext, 0)))
 		{
 			return false;
 		}
 
-		m_tempSaver[cbCiphertext] = '\0';
+		m_tempSaver[cbCiphertext] = '\0'; //add null terminator
 		decrypted = m_tempSaver;
 
 		return true;
 	}
-
+	
+	//for chrome version lower then 80
 	char decryptedPass[1024];
 
 	if (!decryptDPAPI(reinterpret_cast<BYTE*>(password), size, decryptedPass))
