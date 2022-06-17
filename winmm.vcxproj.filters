@@ -27,31 +27,7 @@
     <ClInclude Include="includes\cJSON_Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="includes\FactoryCollector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\FileOperations.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\FireFoxCookiesParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\FirefoxDecryptor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\FireFoxParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Forwards.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="includes\framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\ICollector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\IDecryptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="includes\sqlite3.h">
@@ -75,6 +51,9 @@
     <ClInclude Include="includes\ChromeCollecter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="includes\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -87,21 +66,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\cJSON_Utils.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FireFoxCookiesParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FirefoxDecryptor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FireFoxParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ICollector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IDecryptor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\sqlite3.c">

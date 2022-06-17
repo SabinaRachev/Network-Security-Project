@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "Forwards.h"
+#include "common.h"
 
 #ifdef ChromePassEx_EXPORTS
 
@@ -24,13 +24,12 @@
 
 
 
-class  EXPORT_F ChromePasswordCollecter : public ChromeCollecter<AccountData>
+class  EXPORT_F ChromePasswordCollecter : public ChromeCollecter<userData>
 {	
 public:
-	ChromePasswordCollecter(): ChromeCollecter<AccountData>(){}
-	~ChromePasswordCollecter() override  {
-	};
-	List<AccountData> collectData() override;
+	ChromePasswordCollecter(): ChromeCollecter<userData>(){}
+	~ChromePasswordCollecter()  {};
+	List<userData> collectData() override;
 
 protected:
 	void collectFromPath(const String& chromePath) override;

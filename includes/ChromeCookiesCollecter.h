@@ -5,8 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "Forwards.h"
-#include "ICollector.h"
+#include "common.h"
 
 #ifdef ChromePassEx_EXPORTS
 
@@ -28,9 +27,7 @@ class  EXPORT_F ChromeCookiesCollecter : public ChromeCollecter<CookieData>
 {
 public:
 	ChromeCookiesCollecter() : ChromeCollecter<CookieData>() {}
-	~ChromeCookiesCollecter() override {
-
-	}
+	~ChromeCookiesCollecter() {}
 	List<CookieData> collectData() override;
 
 protected:

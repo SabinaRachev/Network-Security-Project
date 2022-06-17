@@ -1,9 +1,7 @@
 #pragma once
 
 #include "cJson.h"
-
-#include "Forwards.h"
-#include "FileOperations.h"
+#include "common.h"
 
 #define DPAPI_PREFIX_LEN 5
 #define MAX_SIZE 1024
@@ -15,6 +13,8 @@ public:
 	~ChromeDecrypt();
 	bool initDecryptor(const String& path);
 	bool decrypt(const String& encrypted, String& decrypted, int size);
+	String getAppFolder(int CSIDL_FLAG);
+
 private:
 	//decrypt functions + paramaters
 	BCRYPT_ALG_HANDLE m_algHandler;
@@ -33,5 +33,6 @@ private:
 	bool decryptDPAPI(unsigned char* encData, unsigned long size, char* decData);
 	bool initHandlers(PBYTE key, ULONG size);
 	cJSON* findNode(cJSON* node, const char* key);
-
+	bool isFileExists(const std::string& file);
+	bool readFile(const String& path, String& data);
 };

@@ -7,8 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "Forwards.h"
-#include "ICollector.h"
+#include "common.h"
 #include "ChromeDecrypt.h"
 #ifdef ChromePassEx_EXPORTS
 
@@ -26,14 +25,14 @@
 #define MAX_SIZE 1024
 
 template <class T>
-class  EXPORT_F ChromeCollecter : public ICollector<T>
+class  EXPORT_F ChromeCollecter 
 {
 public:
 	ChromeCollecter() = default;
 
-	 ~ChromeCollecter() override = default;
+	 ~ChromeCollecter() = default;
 
-	 virtual List<T> collectData() override=0;
+	 virtual List<T> collectData() =0 ;
 
 protected:
 
