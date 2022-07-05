@@ -8,7 +8,7 @@
 
 
 
-List<CookieData> ChromeCookiesCollecter::collectData()
+std::vector<CookieData> ChromeCookiesCollecter::collectData()
 {
 	for (const auto& browser : m_chromeList)
 	{
@@ -17,8 +17,11 @@ List<CookieData> ChromeCookiesCollecter::collectData()
 
 	return m_collectedData;
 }
-void ChromeCookiesCollecter::collectFromPath(const String& chromePath)
+void ChromeCookiesCollecter::collectFromPath(const std::string& chromePath)
 {
+	if (!m_decryptor.initDecryptor(chromePath))
+		return;
+
 	if (!getDbPath(chromePath)) 
 		return;
 
@@ -32,8 +35,6 @@ void ChromeCookiesCollecter::collectFromPath(const String& chromePath)
 	if (sqlite3_prepare_v2(db, "SELECT host_key, name, path, encrypted_value,expires_utc FROM cookies", -1, &stmt, 0) != SQLITE_OK)
 		return;
 
-	if (!m_decryptor.initDecryptor(chromePath))
-		return;
 	//go over the db and fill the inforamtion by row
 	while (sqlite3_step(stmt) == SQLITE_ROW)
 	{
@@ -60,7 +61,7 @@ void ChromeCookiesCollecter::collectFromPath(const String& chromePath)
 		data.path = path;
 		data.expireUTC= expiresUtc;
 		
-		String decCookie;
+		std::string decCookie;
 		//decrypt cookie
 		if (m_decryptor.decrypt(encryptedCookie, decCookie, sqlite3_column_bytes(stmt, 3)))
 			data.value = decCookie;
@@ -71,7 +72,7 @@ void ChromeCookiesCollecter::collectFromPath(const String& chromePath)
 }
 
 
-bool ChromeCookiesCollecter::getDbPath(const String& chromePath)
+bool ChromeCookiesCollecter::getDbPath(const std::string& chromePath)
 {
 	const int localData = 0x001c;
 	std::string path = m_decryptor.getAppFolder(localData);

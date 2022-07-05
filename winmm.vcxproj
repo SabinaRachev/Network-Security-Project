@@ -167,7 +167,6 @@
     <ClInclude Include="includes\ChromePasswordCollecter.h" />
     <ClInclude Include="includes\cJSON.h" />
     <ClInclude Include="includes\cJSON_Utils.h" />
-    <ClInclude Include="includes\common.h" />
     <ClInclude Include="includes\framework.h" />
     <ClInclude Include="includes\SendEmail.h" />
     <ClInclude Include="includes\sqlite3.h" />

@@ -51,9 +51,6 @@
     <ClInclude Include="includes\ChromeCollecter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="includes\common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

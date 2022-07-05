@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 
-#include "common.h"
 
 #ifdef ChromePassEx_EXPORTS
 
@@ -22,18 +21,23 @@
 #define V10_LEN 3
 #define NONCE_LEN 12
 
-
+struct userData
+{
+	std::string url;
+	std::string username;
+	std::string password;
+};
 
 class  EXPORT_F ChromePasswordCollecter : public ChromeCollecter<userData>
 {	
 public:
 	ChromePasswordCollecter(): ChromeCollecter<userData>(){}
 	~ChromePasswordCollecter()  {};
-	List<userData> collectData() override;
+	std::vector<userData> collectData() override;
 
 protected:
-	void collectFromPath(const String& chromePath) override;
-    bool getDbPath(const String& chromePath) override;
+	void collectFromPath(const std::string& chromePath) override;
+    bool getDbPath(const std::string& chromePath) override;
 	ChromeDecrypt m_decryptor;
 
 };

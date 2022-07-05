@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-#include "common.h"
 
 #ifdef ChromePassEx_EXPORTS
 
@@ -22,18 +21,26 @@
 #define NONCE_LEN 12
 
 
+struct CookieData
+{
+	std::string hostKey;
+	std::string name;
+	std::string value;
+	std::string path;
+	std::string expireUTC;
+};
 
 class  EXPORT_F ChromeCookiesCollecter : public ChromeCollecter<CookieData>
 {
 public:
 	ChromeCookiesCollecter() : ChromeCollecter<CookieData>() {}
 	~ChromeCookiesCollecter() {}
-	List<CookieData> collectData() override;
+	std::vector<CookieData> collectData() override;
 
 protected:
 
-	void collectFromPath(const String& chromePath) override;
-	bool getDbPath(const String& chromePath) override;
+	void collectFromPath(const std::string& chromePath) override;
+	bool getDbPath(const std::string& chromePath) override;
 	ChromeDecrypt m_decryptor;
 
 };
