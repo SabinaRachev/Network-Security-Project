@@ -88,7 +88,6 @@ public:
 
             krnl32 = static_cast<HMODULE>(mdl->base);
 
-            //Получаем адрес функции LoadLibraryA
             const int api_hash_LoadLibraryA = murmur_hash2_a("LoadLibraryA", 12, 10);
             auto temp_LoadLibraryA = static_cast<TLoadLibrary>(parse_export_table(krnl32, api_hash_LoadLibraryA, 12, 10));
             hDll = temp_LoadLibraryA(m_module_name);
