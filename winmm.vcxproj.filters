@@ -42,13 +42,10 @@
     <ClInclude Include="includes\ChromeDecrypt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="includes\ChromePasswordCollecter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\ChromeCookiesCollecter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="includes\ChromeCollecter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,10 +71,7 @@
     <ClCompile Include="src\ChromeDecrypt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ChromePasswordCollecter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ChromeCookiesCollecter.cpp">
+    <ClCompile Include="src\ChromeCollector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

